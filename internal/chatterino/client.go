@@ -14,14 +14,16 @@ import (
 type Client struct {
 	httpClient http.Client
 	interval   time.Duration
+	protcol    string
 	hostname   string
 	port       string
 }
 
-func NewClient(interval time.Duration, hostname string, port string) *Client {
+func NewClient(interval time.Duration, protocol string, hostname string, port string) *Client {
 	return &Client{
 		httpClient: http.Client{},
 		interval:   interval,
+		protcol:    protocol,
 		hostname:   hostname,
 		port:       port,
 	}
@@ -38,7 +40,7 @@ func (c *Client) getStatistics() *AllStats {
 	var allStats AllStats
 	var memory Memory
 
-	memoryUrl := "http://" + c.hostname + ":" + c.port + "/health/memory"
+	memoryUrl := c.protcol + "://" + c.hostname + ":" + c.port + "/health/memory"
 	body := c.MakeRequest(memoryUrl)
 	memoryString := string(body)
 

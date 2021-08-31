@@ -3,16 +3,18 @@ package main
 import (
 	"time"
 
+	"github.com/m4tthewde/chatterino2-api-exporter/config"
 	"github.com/m4tthewde/chatterino2-api-exporter/internal/chatterino"
 	"github.com/m4tthewde/chatterino2-api-exporter/internal/metrics"
 	"github.com/m4tthewde/chatterino2-api-exporter/internal/server"
 )
 
 func main() {
+	cfg := config.GetConfig()
 	metrics.Init()
 
-	initChatterinoClient()
-	s := server.NewServer("9500")
+	initChatterinoClient(cfg)
+	s := server.NewServer(cfg.ServerPort)
 	go s.ListenAndServe()
 
 	for {
@@ -20,7 +22,7 @@ func main() {
 	}
 }
 
-func initChatterinoClient() {
-	client := chatterino.NewClient(time.Second*10, "localhost", "1234")
+func initChatterinoClient(cfg *config.Config) {
+	client := chatterino.NewClient(time.Second*time.Duration(cfg.Interval), cfg.Protocol, cfg.Hostname, cfg.Port)
 	go client.Scrape()
 }
