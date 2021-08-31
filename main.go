@@ -11,9 +11,11 @@ import (
 
 func main() {
 	cfg := config.GetConfig()
+
 	metrics.Init()
 
 	initChatterinoClient(cfg)
+
 	s := server.NewServer(cfg.ServerPort)
 	go s.ListenAndServe()
 
