@@ -26,7 +26,6 @@ func GetConfig() *Config {
 type Config struct {
 	Protocol   string `yaml:"protocol"`
 	Hostname   string `yaml:"hostname"`
-	Port       string `yaml:"port"`
 	Interval   int    `yaml:"interval"`
 	ServerPort string `yaml:"server-port"`
 }

@@ -25,6 +25,6 @@ func main() {
 }
 
 func initChatterinoClient(cfg *config.Config) {
-	client := chatterino.NewClient(time.Second*time.Duration(cfg.Interval), cfg.Protocol, cfg.Hostname, cfg.Port)
+	client := chatterino.NewClient(time.Second*time.Duration(cfg.Interval), cfg.Protocol, cfg.Hostname)
 	go client.Scrape()
 }
